@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pommeau de douche Massage En Silicone pivotante</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- العرض العلوي -->
+    <div class="offer">
+        🔥 Douchette - عرض خاص 🎁
+    </div>
+
+    <!-- الصور -->
+    <div class="gallery">
+
+        <div class="main-image">
+            <img id="mainImage" src="doudou1.jpeg" alt="Douchette">
+        </div>
+
+        <div class="thumbnails">
+            <img src="doudou1.jpeg" onclick="changeImage(this)">
+            <img src="Doudou2.jpeg" onclick="changeImage(this)">
+            <img src="doudou3.jpeg" onclick="changeImage(this)">
+        </div>
+
+    </div>
+
+
+    <!-- اختيار المنتج -->
+    <section class="product-section">
+
+        <h2>Pommeau de douche Massage En Silicone pivotante</h2>
+
+
+        <div class="product-price">
+          <span class="old-price">1000 دج</span>
+          <span class="new-price">800 دج</span>
+        </div>
+
+        <!-- الألوان -->
+        <h3>اللون :</h3>
+
+        <div class="colors">
+
+            <button
+                class="color active"
+                data-color="رمادي"
+                onclick="selectColor(this)">
+                ⚫
+                <span>رمادي</span>
+            </button>
+
+        </div>
+
+
+        <!-- الاسم -->
+        <div class="form-section">
+
+            <h3>الاسم :</h3>
+
+            <div class="name-fields">
+
+                <input
+                    type="text"
+                    id="firstName"
+                    placeholder="الاسم">
+
+                <input
+                    type="text"
+                    id="lastName"
+                    placeholder="اللقب">
+
+            </div>
+
+
+            <!-- الهاتف -->
+            <h3>رقم الهاتف :</h3>
+
+            <input
+                type="tel"
+                id="phone"
+                placeholder="06...">
+
+
+            <!-- الولاية -->
+            <h3>الولاية :</h3>
+
+            <select id="wilaya">
+
+                <option value="">اختر الولاية :</option>
+
+            </select>
+
+
+            <!-- البلدية -->
+            <h3>البلدية :</h3>
+
+            <input
+                type="text"
+                id="commune"
+                placeholder=" مثلا الحراش.....">
+
+            <!-- التوصيل -->
+            <h3>التوصيل :</h3>
+
+            <div class="delivery">
+
+                <button
+                    id="homeDelivery"
+                    onclick="selectDelivery('home')">
+
+                    🏠
+                    <strong>منزل</strong>
+                    <span id="homePrice">---</span>
+
+                </button>
+
+
+                <button
+                    id="officeDelivery"
+                    onclick="selectDelivery('office')">
+
+                    🏢
+                    <strong>مكتب</strong>
+                    <span id="officePrice">---</span>
+
+                </button>
+
+            </div>
+
+
+            <!-- الملخص -->
+            <div class="summary">
+
+                <div>
+                    <span id="summaryProduct">
+                        Douchette
+                    </span>
+
+                    <span id="summaryPrice">
+                        800 دج
+                    </span>
+                </div>
+
+                <div>
+                    <span>التوصيل</span>
+
+                    <span id="summaryDelivery">
+                        0 دج
+                    </span>
+                </div>
+
+                <hr>
+
+                <div class="total">
+                    <strong>المجموع</strong>
+
+                    <strong id="totalPrice">
+                        800 دج
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <!-- الطلب -->
+            <button
+                class="order-button"
+                onclick="placeOrder()">
+
+                اطلب الآن ✅
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <script src="app.js"></script>
+
+</body>
+</html>
