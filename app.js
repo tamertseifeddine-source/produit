@@ -418,9 +418,8 @@ async function placeOrder() {
     // ================================
     try {
         const response =
-            await fetch(
-                "http://localhost:3000/order",
-                {
+            await fetch("https://produit-backend-e5gs.onrender.com/order", 
+                        {
                     method: "POST",
                     headers: {
                         "Content-Type":
