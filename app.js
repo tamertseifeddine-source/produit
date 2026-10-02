@@ -753,9 +753,16 @@ async function placeOrder() {
         // ================================
         // نجاح
         // ================================
-        if (response.ok) {
+            if (response.ok) {
 
-            showSuccessMessage(total);
+    fbq('track', 'Lead', {
+        value: total,
+        currency: 'DZD'
+    });
+
+    showSuccessMessage(total);
+
+}
 
         } else {
 
