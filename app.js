@@ -753,16 +753,15 @@ async function placeOrder() {
         // ================================
         // نجاح
         // ================================
-            if (response.ok) {
+        if (response.ok) {
 
-    fbq('track', 'Lead', {
-        value: total,
-        currency: 'DZD'
-    });
+            // Meta Pixel - Lead
+            fbq('track', 'Lead', {
+                value: total,
+                currency: 'DZD'
+            });
 
-    showSuccessMessage(total);
-
-}
+            showSuccessMessage(total);
 
         } else {
 
