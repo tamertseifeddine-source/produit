@@ -12,7 +12,7 @@ const PRODUCT = {
 let quantity = 1;
 
 // ================================
-// ألوان المنتج
+// اللون
 // ================================
 let selectedColor = "رمادي";
 
@@ -82,7 +82,7 @@ const wilayas = {
 };
 
 // ================================
-// إضافة الولايات إلى القائمة
+// إضافة الولايات للقائمة
 // ================================
 const wilayaSelect =
     document.getElementById("wilaya");
@@ -99,7 +99,7 @@ for (const wilaya in wilayas) {
 }
 
 // ================================
-// إنشاء اختيار الكمية
+// إضافة قسم الكمية
 // ================================
 const quantityContainer =
     document.createElement("div");
@@ -178,7 +178,6 @@ quantityContainer.innerHTML = `
     ></div>
 `;
 
-// وضع الكمية في بداية قسم الطلب
 const formSection =
     document.querySelector(".form-section");
 
@@ -198,8 +197,6 @@ function getProductTotal() {
     const normalPrice =
         PRODUCT.price * quantity;
 
-    // الخصم 100 دج للقطعة الثانية
-    // والخصم 200 دج من القطعة الثالثة وما بعدها
     const discount =
         Math.min((quantity - 1) * 100, 200);
 
@@ -214,7 +211,7 @@ function getProductTotal() {
 }
 
 // ================================
-// تحديث الكمية والسعر
+// تحديث الكمية
 // ================================
 function updateQuantityDisplay() {
 
@@ -261,7 +258,7 @@ function updateQuantityDisplay() {
 }
 
 // ================================
-// زر إنقاص الكمية
+// زر ناقص
 // ================================
 const minusQuantity =
     document.getElementById("minusQuantity");
@@ -283,7 +280,7 @@ if (minusQuantity) {
 }
 
 // ================================
-// زر زيادة الكمية
+// زر زائد
 // ================================
 const plusQuantity =
     document.getElementById("plusQuantity");
@@ -308,7 +305,8 @@ wilayaSelect.addEventListener(
     "change",
     function () {
 
-        const wilaya = this.value;
+        const wilaya =
+            this.value;
 
         if (!wilaya) {
 
@@ -422,16 +420,12 @@ function selectDelivery(type) {
 }
 
 // ================================
-// حساب المجموع النهائي
+// حساب المجموع
 // ================================
 function updateTotal() {
 
     const wilaya =
         wilayaSelect.value;
-
-    if (!wilaya) {
-        return;
-    }
 
     const priceInfo =
         getProductTotal();
@@ -443,6 +437,10 @@ function updateTotal() {
 
         summaryPrice.textContent =
             priceInfo.productTotal + " دج";
+    }
+
+    if (!wilaya) {
+        return;
     }
 
     if (!selectedDelivery) {
@@ -478,6 +476,123 @@ function updateTotal() {
 }
 
 // ================================
+// رسالة الانتظار داخل الصفحة
+// ================================
+function showLoadingMessage() {
+
+    let loadingMessage =
+        document.getElementById("loadingMessage");
+
+    if (!loadingMessage) {
+
+        loadingMessage =
+            document.createElement("div");
+
+        loadingMessage.id =
+            "loadingMessage";
+
+        loadingMessage.style.position =
+            "fixed";
+
+        loadingMessage.style.top =
+            "50%";
+
+        loadingMessage.style.left =
+            "50%";
+
+        loadingMessage.style.transform =
+            "translate(-50%, -50%)";
+
+        loadingMessage.style.background =
+            "#111";
+
+        loadingMessage.style.color =
+            "white";
+
+        loadingMessage.style.padding =
+            "25px 30px";
+
+        loadingMessage.style.borderRadius =
+            "20px";
+
+        loadingMessage.style.fontSize =
+            "19px";
+
+        loadingMessage.style.fontWeight =
+            "bold";
+
+        loadingMessage.style.textAlign =
+            "center";
+
+        loadingMessage.style.zIndex =
+            "9999";
+
+        loadingMessage.style.boxShadow =
+            "0 5px 25px rgba(0,0,0,0.3)";
+
+        document.body.appendChild(
+            loadingMessage
+        );
+    }
+
+    loadingMessage.textContent =
+        "⏳ يرجى الانتظار قليلًا، جاري إرسال طلبك...";
+}
+
+// ================================
+// إخفاء رسالة الانتظار
+// ================================
+function hideLoadingMessage() {
+
+    const loadingMessage =
+        document.getElementById("loadingMessage");
+
+    if (loadingMessage) {
+
+        loadingMessage.remove();
+    }
+}
+
+// ================================
+// رسالة النجاح
+// ================================
+function showSuccessMessage(total) {
+
+    hideLoadingMessage();
+
+    alert(
+        "تم إرسال الطلب بنجاح ✅\n" +
+        "الكمية: " +
+        quantity +
+        "\n" +
+        "سعر المنتجات: " +
+        getProductTotal().productTotal +
+        " دج\n" +
+        "التوصيل: " +
+        getDeliveryPrice() +
+        " دج\n" +
+        "المجموع: " +
+        total +
+        " دج"
+    );
+}
+
+// ================================
+// الحصول على سعر التوصيل
+// ================================
+function getDeliveryPrice() {
+
+    const wilaya =
+        wilayaSelect.value;
+
+    if (!wilaya || !selectedDelivery) {
+        return 0;
+    }
+
+    return wilayas[wilaya][selectedDelivery];
+}
+
+// ================================
 // إرسال الطلب
 // ================================
 async function placeOrder() {
@@ -502,7 +617,7 @@ async function placeOrder() {
             .value.trim();
 
     // ================================
-    // التحقق من البيانات
+    // التحقق من المعلومات
     // ================================
     if (
         !firstName ||
@@ -528,9 +643,6 @@ async function placeOrder() {
         return;
     }
 
-    // ================================
-    // حساب الأسعار
-    // ================================
     const deliveryPrice =
         wilayas[wilaya][selectedDelivery];
 
@@ -543,6 +655,9 @@ async function placeOrder() {
         return;
     }
 
+    // ================================
+    // حساب السعر
+    // ================================
     const priceInfo =
         getProductTotal();
 
@@ -607,14 +722,12 @@ async function placeOrder() {
     );
 
     // ================================
-    // رسالة انتظار
+    // إظهار الانتظار
     // ================================
-    alert(
-        "⏳ يرجى الانتظار قليلًا، جاري إرسال طلبك..."
-    );
+    showLoadingMessage();
 
     // ================================
-    // إرسال إلى Node.js / Render
+    // إرسال الطلب مباشرة
     // ================================
     try {
 
@@ -637,25 +750,16 @@ async function placeOrder() {
         const data =
             await response.json();
 
+        // ================================
+        // نجاح
+        // ================================
         if (response.ok) {
 
-            alert(
-                "تم إرسال الطلب بنجاح ✅\n" +
-                "الكمية: " +
-                quantity +
-                "\n" +
-                "سعر المنتجات: " +
-                priceInfo.productTotal +
-                " دج\n" +
-                "التوصيل: " +
-                deliveryPrice +
-                " دج\n" +
-                "المجموع: " +
-                total +
-                " دج"
-            );
+            showSuccessMessage(total);
 
         } else {
+
+            hideLoadingMessage();
 
             alert(
                 "حدث خطأ في إرسال الطلب ❌"
@@ -666,6 +770,8 @@ async function placeOrder() {
 
         console.error(error);
 
+        hideLoadingMessage();
+
         alert(
             "لا يمكن الاتصال بالسيرفر ❌"
         );
@@ -673,6 +779,6 @@ async function placeOrder() {
 }
 
 // ================================
-// تشغيل عرض الكمية عند فتح الصفحة
+// التشغيل الأولي
 // ================================
 updateQuantityDisplay();
